@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LeftBikeParkActivity">
+
+    <TextView
+        android:id="@+id/leftBikeParkMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        android:text="@string/su_bicicleta_fue_retirada_del_parqueadero_xx_si_fue_usted_quien_la_retir_por_favor_confirme_si_no_av_senos_del_robo"
+         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/confirmRemovalOfBikeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirmar_retiro"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:backgroundTint="@android:color/holo_green_light"
+            />
+
+        <Button
+            android:id="@+id/robberyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/avisar_de_robo"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:backgroundTint="@android:color/holo_red_light"
+             />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/left_bike_park_on_button_click_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp" />
+
+</LinearLayout>

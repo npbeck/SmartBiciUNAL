@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">SmartBiciUNAL</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">usuario</string>
+    <string name="prompt_password">contraseña</string>
+    <string name="action_sign_in">Ingresar</string>
+    <string name="action_sign_in_short">Ingresar</string>
+    <string name="welcome">"Bienvenid@!"</string>
+    <string name="invalid_username">Usuario no válido</string>
+    <string name="invalid_password">Contraseña tiene que ser de más de 5 caracteres</string>
+    <string name="login_failed">"Credenciales erróneos"</string>
+    <string name="su_bicicleta_ingres_al_parquadero_xx_en_el_caso_de_que_salga_nuevamente_del_parquadero_la_vamos_a_notificar_le_confirmamos_la_ubicaci_n_de_su_bicicleta_en_el_mapa_abajo">Su bicicleta ingresó al parquadero XX. En el caso de que salga nuevamente del parquadero la vamos a notificar. Le confirmamos la ubicación de su bicicleta en el mapa abajo.</string>
+    <string name="su_bicicleta_ingres_al_campus_de_la_universidad_nacional_de_colombia_sede_bogot_se_encuentra_en_la_puerta_xx_encuentre_el_parqueadero_de_bicicletas_m_s_cercano_en_el_mapa_abajo">Su bicicleta ingresó al campus de la Universidad Nacional de Colombia, sede Bogotá. Se encuentra en la puerta XX. Encuentre el parqueadero de bicicletas más cercano en el mapa abajo.</string>
+    <string name="en_este_momento_to_bicicleta_se_encuentra_fuera_del_campus">En este momento su bicicleta se encuentra fuera del campus.</string>
+    <string name="smartbiciunal_logo">SmartBiciUNAL logo</string>
+    <string name="su_bicicleta_fue_retirada_del_parqueadero_xx_si_fue_usted_quien_la_retir_por_favor_confirme_si_no_av_senos_del_robo">Su bicicleta fue retirada del parqueadero XX. Si fue usted quien la retiró por favor confirme. Si no avísenos del robo.</string>
+    <string name="avisar_de_robo">Avisar de robo</string>
+    <string name="confirmar_retiro">Confirmar retiro</string>
+    <string name="su_bicicleta_sali_del_campus_de_la_universidad_nacional_de_colombia_sede_bogot_por_la_puerta_xx_gracias_por_usar_smartbiciunal">Su bicicleta salió del campus de la Universidad Nacional de Colombia, sede Bogotá por la puerta XX. Gracias por usar SmartBiciUNAL</string>
+    <string name="listo">Listo</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="investigating_robbery_message">Reportamos el robo de tu bicicleta a todas las porterías. Mientras lo investigemos por favor espere."</string>
+    <string name="bike_left_park_no_problem">Listo. Por favor avance hacía tu puerta preferida</string>
+</resources>

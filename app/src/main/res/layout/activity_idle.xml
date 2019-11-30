@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".IdleActivity">
+
+    <ImageView
+        android:id="@+id/SmartBiciUNALLogo"
+        android:layout_height="400dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/smartbiciunal_logo"
+        />
+
+    <TextView
+        android:id="@+id/idleMessage"
+        android:text="@string/en_este_momento_to_bicicleta_se_encuentra_fuera_del_campus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        />
+
+</LinearLayout>
