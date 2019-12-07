@@ -17,5 +17,6 @@ public class IdleActivity extends AppCompatActivity {
 
         idleTextView = findViewById(R.id.idleMessage);
         logo = findViewById(R.id.SmartBiciUNALLogo);
+        logo.setImageResource(R.drawable.bike_logo);
     }
 }
