@@ -21,4 +21,10 @@
     <string name="title_activity_maps">Map</string>
     <string name="investigating_robbery_message">Reportamos el robo de tu bicicleta a todas las porterías. Mientras lo investigemos por favor espere."</string>
     <string name="bike_left_park_no_problem">Listo. Por favor avance hacía tu puerta preferida</string>
+    <string name="preTextLeftBikePark">Su bicicleta fue retirada del parqueadero </string>
+    <string name="postTextLeftBikePark">. Si fue usted quien la retiró por favor confirme. Si no avísenos del robo.</string>
+    <string name="preTextLeftCampusRobbery">Su bicicleta robada se encuentra en la salida </string>
+    <string name="postTextLeftCampusRobbery">. Por favor reclámela con las autoridades.</string>
+    <string name="preTextLeftCampus">So bicicleta acaba de salir de la salida </string>
+    <string name="postTextLeftCampus">. Gracias por usar SmartBiciUNAL.</string>
 </resources>

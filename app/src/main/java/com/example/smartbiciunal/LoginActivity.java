@@ -13,11 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
@@ -30,9 +28,6 @@ public class LoginActivity extends AppCompatActivity implements OnCompleteListen
     Button loginButton;
     ProgressBar progressBar;
     FirebaseFirestore db;
-
-    // this string stores the user ID, so that other activities can use it to query the database for info
-    protected static String userIdInDatabase = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +54,9 @@ public class LoginActivity extends AppCompatActivity implements OnCompleteListen
                         .addOnCompleteListener(LoginActivity.this);
             }
         });
+
+        // fetch static bike park data
+        SmartBiciConstants.fetchStaticLocationsData();
     }
 
     @Override
@@ -67,8 +65,13 @@ public class LoginActivity extends AppCompatActivity implements OnCompleteListen
         if (task.isSuccessful()){
             List<DocumentSnapshot> docs = Objects.requireNonNull(task.getResult()).getDocuments();
             if (docs.size() > 0){
-                userIdInDatabase = docs.get(0).getId();
-                Toast.makeText(getApplicationContext(), "Bienvenid@, " + userIdInDatabase + " !", Toast.LENGTH_LONG).show();
+                // set user ID
+                SmartBiciConstants.userIdInDatabase = docs.get(0).getId();
+
+                // set user's bike ID reference
+                SmartBiciConstants.userBikeReferenceInDatabase = Objects.requireNonNull(docs.get(0).get("bike")).toString();
+
+                Toast.makeText(getApplicationContext(), "Bienvenid@, " + SmartBiciConstants.userIdInDatabase + " !", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(this, IdleActivity.class));
                 return;
             }

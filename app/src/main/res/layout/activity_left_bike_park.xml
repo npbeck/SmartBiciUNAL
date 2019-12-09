@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,6 +16,18 @@
         android:paddingBottom="40dp"
         android:text="@string/su_bicicleta_fue_retirada_del_parqueadero_xx_si_fue_usted_quien_la_retir_por_favor_confirme_si_no_av_senos_del_robo"
          />
+
+    <ProgressBar
+        android:id="@+id/loading_left_bike_park"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
+        android:visibility="gone"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,9 +1,24 @@
 package com.example.smartbiciunal;
 
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
+import android.content.Intent;
 
-public class EnteredBikeParkActivity extends PositionAndMessageActivity implements OnMapReadyCallback {
+import androidx.annotation.Nullable;
+
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import java.util.Calendar;
+
+import static java.util.Objects.*;
+
+public class EnteredBikeParkActivity extends PositionAndMessageActivity
+        implements OnMapReadyCallback, OnCompleteListener<DocumentSnapshot> {
 
     @Override
     protected String getMessageBeginning() {
@@ -17,19 +32,46 @@ public class EnteredBikeParkActivity extends PositionAndMessageActivity implemen
     }
 
     @Override
+    protected void refreshViews() {
+        // perform query for bike info on DB and register this class as listener
+        getDB().document(SmartBiciConstants.getUserBikeReferenceInDatabase())
+                .get()
+                .addOnCompleteListener(this);
+    }
+
+    @Override
     protected String getMarkerMessage() {
         return "Usted parqueó su bicicleta en este parquadero.";
     }
 
     @Override
-    protected String getLocation() {
-        // TODO change appropriately
-        return "B";
+    protected MarkerOptions getBikeLocationMarker(LatLng bikeLocation) {
+        return new MarkerOptions()
+                .position(bikeLocation)
+                .title(getMarkerMessage())
+                .snippet("Fecha en que la parqueó: " + Calendar.getInstance().getTime().toString() + ".")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
     }
 
     @Override
-    protected LatLng getLocationLatLng() {
-        // TODO change appropriately
-        return new LatLng(4.632829, -74.085173);
+    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+        if (e != null) {
+            return;
+        }
+
+        if (documentSnapshot != null && documentSnapshot.exists()) {
+            // check whether the bike moved to a bike park
+            if (((DocumentReference) requireNonNull(documentSnapshot.get("location"))).getId().equals("LEFT_BIKE_PARK")){
+                // stop listening to changes
+                listenerRegistration.remove();
+
+                // TODO not quite working yet. Make it return the name field of the previous parking lot
+                // set last bike park location for next Activity
+                SmartBiciConstants.userBikeLocationBeforeItLeftTheBikePark = ((DocumentReference) requireNonNull(documentSnapshot
+                        .get("location"))).getId();
+
+                startActivity(new Intent(this, LeftBikeParkActivity.class));
+            }
+        }
     }
 }
