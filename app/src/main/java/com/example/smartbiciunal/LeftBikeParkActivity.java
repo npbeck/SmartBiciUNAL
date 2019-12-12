@@ -46,7 +46,7 @@ public class LeftBikeParkActivity extends AppCompatActivity implements EventList
         configureTextView();
 
         // register a listener that triggers the LeftCampusActivity
-        DocumentReference bikeReference = FirebaseFirestore.getInstance().document(SmartBiciConstants.getUserBikeReferenceInDatabase());
+        DocumentReference bikeReference = FirebaseFirestore.getInstance().document(SmartBiciConstants.getUserBikePathInDatabase());
         listenerRegistration = bikeReference.addSnapshotListener(this);
     }
 
@@ -56,7 +56,7 @@ public class LeftBikeParkActivity extends AppCompatActivity implements EventList
         if (location == null)
             location = "XX";
 
-        String newText = getString(R.string.preTextLeftBikePark) +
+        String newText = getString(R.string.preTextLeftBikePark) + " " +
                 location +
                 getString(R.string.postTextLeftBikePark);
 
@@ -72,7 +72,7 @@ public class LeftBikeParkActivity extends AppCompatActivity implements EventList
                 progressBar.setVisibility(View.VISIBLE);
 
                 DocumentReference bikeRef = FirebaseFirestore.getInstance()
-                        .document(SmartBiciConstants.getUserBikeReferenceInDatabase());
+                        .document(SmartBiciConstants.getUserBikePathInDatabase());
 
                 bikeRef.update("stolen", true)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

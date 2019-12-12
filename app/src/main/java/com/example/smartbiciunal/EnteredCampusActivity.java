@@ -14,7 +14,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.LinkedList;
@@ -90,7 +89,7 @@ public class EnteredCampusActivity extends PositionAndMessageActivity
     @Override
     protected void refreshViews() {
         // perform query for bike info on DB and register this class as listener
-        getDB().document(SmartBiciConstants.getUserBikeReferenceInDatabase())
+        getDB().document(SmartBiciConstants.getUserBikePathInDatabase())
                 .get()
                 .addOnCompleteListener(this);
     }

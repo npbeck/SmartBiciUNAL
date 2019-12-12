@@ -34,7 +34,7 @@ public class EnteredBikeParkActivity extends PositionAndMessageActivity
     @Override
     protected void refreshViews() {
         // perform query for bike info on DB and register this class as listener
-        getDB().document(SmartBiciConstants.getUserBikeReferenceInDatabase())
+        getDB().document(SmartBiciConstants.getUserBikePathInDatabase())
                 .get()
                 .addOnCompleteListener(this);
     }
@@ -64,11 +64,6 @@ public class EnteredBikeParkActivity extends PositionAndMessageActivity
             if (((DocumentReference) requireNonNull(documentSnapshot.get("location"))).getId().equals("LEFT_BIKE_PARK")){
                 // stop listening to changes
                 listenerRegistration.remove();
-
-                // TODO not quite working yet. Make it return the name field of the previous parking lot
-                // set last bike park location for next Activity
-                SmartBiciConstants.userBikeLocationBeforeItLeftTheBikePark = ((DocumentReference) requireNonNull(documentSnapshot
-                        .get("location"))).getId();
 
                 startActivity(new Intent(this, LeftBikeParkActivity.class));
             }

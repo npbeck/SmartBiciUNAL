@@ -15,9 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 
-import java.util.Map;
-import java.util.Objects;
-
 public class IdleActivity extends AppCompatActivity implements EventListener<DocumentSnapshot>{
 
     TextView idleTextView;
@@ -36,7 +33,7 @@ public class IdleActivity extends AppCompatActivity implements EventListener<Doc
         db = FirebaseFirestore.getInstance();
 
         // register listener that triggers EnteredCampusActivity
-        DocumentReference bikeReference = db.document(SmartBiciConstants.getUserBikeReferenceInDatabase());
+        DocumentReference bikeReference = db.document(SmartBiciConstants.getUserBikePathInDatabase());
         listenerRegistration = bikeReference.addSnapshotListener(this);
     }
 

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -46,10 +47,9 @@ public class LoginActivity extends AppCompatActivity implements OnCompleteListen
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                // TODO check how query must be re-written for it to work (connection works)
+                // query for the user's data in the database
                 db.collection("users")
-                        //.whereEqualTo("username", usernameEditText.getText().toString())
-                        //.whereEqualTo("password", passwordEditText.getText().toString())
+                        .whereEqualTo("name", usernameEditText.getText().toString())
                         .get()
                         .addOnCompleteListener(LoginActivity.this);
             }
@@ -59,19 +59,28 @@ public class LoginActivity extends AppCompatActivity implements OnCompleteListen
         SmartBiciConstants.fetchStaticLocationsData();
     }
 
+    /*
+    perform this method when presented with the user's data
+     */
     @Override
     public void onComplete(@NonNull Task<QuerySnapshot> task) {
         progressBar.setVisibility(View.INVISIBLE);
         if (task.isSuccessful()){
+
             List<DocumentSnapshot> docs = Objects.requireNonNull(task.getResult()).getDocuments();
             if (docs.size() > 0){
-                // set user ID
-                SmartBiciConstants.userIdInDatabase = docs.get(0).getId();
+                DocumentSnapshot user = docs.get(0);
+
+                // check that password is correct
+                if (! user.getString("password").equals(passwordEditText.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Credenciales erróneos", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 // set user's bike ID reference
-                SmartBiciConstants.userBikeReferenceInDatabase = Objects.requireNonNull(docs.get(0).get("bike")).toString();
+                SmartBiciConstants.userBikeReferenceInDatabase = (DocumentReference) user.get("bike");
 
-                Toast.makeText(getApplicationContext(), "Bienvenid@, " + SmartBiciConstants.userIdInDatabase + " !", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Bienvenid@, " + user.getString("name") + " !", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(this, IdleActivity.class));
                 return;
             }

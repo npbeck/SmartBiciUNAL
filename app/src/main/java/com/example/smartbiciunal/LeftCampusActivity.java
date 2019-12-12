@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,6 +20,9 @@ public class LeftCampusActivity extends AppCompatActivity implements OnSuccessLi
     Button doneButton;
     TextView leftCampusTextView;
 
+    private String location = null;
+    private boolean stolen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +32,20 @@ public class LeftCampusActivity extends AppCompatActivity implements OnSuccessLi
         leftCampusTextView = findViewById(R.id.leftCampusMessage);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.document(SmartBiciConstants.getUserBikeReferenceInDatabase())
+        db.document(SmartBiciConstants.getUserBikePathInDatabase())
                 .get()
-                .addOnSuccessListener(this);
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        DocumentReference entranceRef = (DocumentReference) documentSnapshot.get("location");
+                        stolen = (boolean) documentSnapshot.get("stolen");
+
+                        FirebaseFirestore.getInstance()
+                                .document(requireNonNull(entranceRef).getPath())
+                                .get()
+                                .addOnSuccessListener(LeftCampusActivity.this);
+                    }
+                });
         configureButton();
     }
 
@@ -49,16 +62,16 @@ public class LeftCampusActivity extends AppCompatActivity implements OnSuccessLi
         });
     }
 
-    private void configureTextView(String location, boolean stolen) {
+    private void makeTextView() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         if (stolen){
-            String text = getString(R.string.preTextLeftCampusRobbery)
+            String text = getString(R.string.preTextLeftCampusRobbery) + " "
                     + location
                     + getString(R.string.postTextLeftCampusRobbery);
             leftCampusTextView.setText(text);
 
             // mark bike as not stolen anymore
-            db.document(SmartBiciConstants.getUserBikeReferenceInDatabase())
+            db.document(SmartBiciConstants.getUserBikePathInDatabase())
                     .update("stolen", false);
         }
         else{
@@ -69,7 +82,7 @@ public class LeftCampusActivity extends AppCompatActivity implements OnSuccessLi
         }
 
         // mark bike as having left the campus
-        db.document(SmartBiciConstants.getUserBikeReferenceInDatabase())
+        db.document(SmartBiciConstants.getUserBikePathInDatabase())
                 .update("location",  db.document(SmartBiciConstants.LOCATION_NOT_ON_CAMPUS));
 
 
@@ -78,11 +91,7 @@ public class LeftCampusActivity extends AppCompatActivity implements OnSuccessLi
 
     @Override
     public void onSuccess(DocumentSnapshot documentSnapshot) {
-        // TODO change request, so it returns the name field
-        String location = ((DocumentReference) requireNonNull(documentSnapshot
-                .get("location"))).getId();
-        boolean stolen = (boolean) documentSnapshot.get("stolen");
-
-        configureTextView(location, stolen);
+        location = documentSnapshot.getString("name");
+        makeTextView();
     }
 }

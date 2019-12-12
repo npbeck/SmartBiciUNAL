@@ -60,7 +60,7 @@ public abstract class PositionAndMessageActivity extends AppCompatActivity
 
     protected void registerActivityChangeListener() {
         // register listener that triggers a new activity
-        DocumentReference bikeReference = db.document(SmartBiciConstants.getUserBikeReferenceInDatabase());
+        DocumentReference bikeReference = db.document(SmartBiciConstants.getUserBikePathInDatabase());
         listenerRegistration = bikeReference.addSnapshotListener(this);
     }
 
@@ -131,6 +131,10 @@ public abstract class PositionAndMessageActivity extends AppCompatActivity
                 DocumentReference currentDocumentReference = doc.getReference();
                 if (currentDocumentReference.equals(locationRef)){
                     String entranceName = Objects.requireNonNull(doc.get("name")).toString();
+
+                    // set global entrance variable (used in LeftBikeParkActivity)
+                    SmartBiciConstants.userBikeLocationBeforeItLeftTheBikePark = entranceName;
+
                     LatLng bikeLocation =
                             new LatLng(Objects.requireNonNull(doc.getGeoPoint("location")).getLatitude(),
                                     Objects.requireNonNull(doc.getGeoPoint("location")).getLongitude());
